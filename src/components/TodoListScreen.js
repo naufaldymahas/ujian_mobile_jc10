@@ -65,6 +65,7 @@ const TodoListScreen = props => {
         })
     }
 
+    // console.log(props)
 
     return (
         <Container>
@@ -95,16 +96,30 @@ const TodoListScreen = props => {
                     return (
                     <ListItem>
                         <Left>
-                            <Button info style={{ padding: 10 }}
-                            onPress={ () => finishedTodo(item.id) }>
-                                <Text style={{ color: 'white'}}>{item.status}</Text>
-                            </Button> 
+                            { 
+                                item.status == 'unfinished'
+                                ?
+                                <Button info style={{ padding: 10 }}
+                                onPress={ () => finishedTodo(item.id) }>
+                                    <Text style={{ color: 'white'}}>{item.status}</Text>
+                                </Button> 
+                                :
+                                <Button success style={{ padding: 10 }}>
+                                    <Text style={{ color: 'white' }}>{item.status}</Text>
+                                </Button>
+                             }
+                           
                         </Left>
                         <Body>
                             <Text>{item.todo}</Text>
                         </Body>
                         <Right style={{ width: '100%'}}>
-                            <TouchableOpacity>
+                            <TouchableOpacity 
+                            onPress={ () => {
+                                props.navigation.navigate('TodoDetailScreen', {
+                                    item: item
+                                })
+                            }  } >
                                 <Text style={{ color: 'lightblue'}}>Open</Text>
                             </TouchableOpacity>
                         </Right>
